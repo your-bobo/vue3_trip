@@ -12,6 +12,7 @@ module.exports = {
     "prettier/prettier": "off",
   },
   parserOptions: {
-    ecmaVersion: 'latest'
+    "ecmaVersion": 'latest',
+    "sourceType": "module"
   },
 }
