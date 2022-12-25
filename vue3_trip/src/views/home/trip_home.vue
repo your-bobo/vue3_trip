@@ -1,10 +1,11 @@
 <template>
   <div class="trip_home">
-    <h2>trip_home</h2>
+    <nav_bar></nav_bar>
   </div>
 </template>
 
 <script setup>
+import nav_bar from './components/nav_bar.vue';
 </script>
 
 <style lang="less" scoped>
