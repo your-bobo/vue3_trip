@@ -1,10 +1,13 @@
 <template>
   <router-view></router-view>
-  <tabbar/>
+  <tabbar v-if="!route.meta.hiddlenTabbar"/>
 </template>
 
 <script setup>
+import { useRoute } from 'vue-router';
 import tabbar from './components/tabbar/tab_bar.vue';
+
+const route = useRoute()
 </script>
 
 <style scoped>
