@@ -14,18 +14,38 @@
       <div class="start">
         <div class="date" @click="show = true">
           <span class="tip">入住</span>
-          <span class="time">6月1日</span>
+          <span class="time">{{ startDate }}</span>
         </div>
-        <div class="stay">共1晚</div>
+        <div class="stay">共{{ days }}晚</div>
       </div>
       <div class="end">
         <div class="date">
           <span class="tip">离店</span>
-          <span class="time">6月1日</span>
+          <span class="time">{{ endDate }}</span>
         </div>
       </div>
     </div>
-    <van-calendar v-model:show="showCalender" type="range" />
+    <van-calendar v-model:show="showCalender" type="range" :round="false" :formatter="formatter" @confirm="calendarConfirm"/>
+
+    <!-- 价格/人数选择 -->
+    <div class="section price-counter bottom-gray-line">
+      <div class="start">价格不限</div>
+      <div class="end">人数不限</div>
+    </div>
+    <!-- 关键字 -->
+    <div class="section keyword bottom-gray-line">关键字/位置/民宿名</div>
+
+    <!-- 热门建议 -->
+    <div class="section hot-suggests">
+      <template v-for="(item, index) in hotSuggests" :key="index">
+        <div 
+          class="item"
+          :style="{ color: item.tagText.color, background: item.tagText.background.color }"
+        >
+          {{ item.tagText.text }}
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -34,6 +54,8 @@ import { useRouter } from 'vue-router'
 import useCityStore from '@/stores/modules/city';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import { formatDate, getDateInterval, formatDateAdd } from '@/utils/date.js'
+import useHomeStore from '@/stores/modules/home'
 
 const router = useRouter()
 
@@ -56,11 +78,35 @@ const cityStore = useCityStore()
 const { currentCity } = storeToRefs(cityStore)
 
 // 日期范围
+const startDate = ref(formatDate(new Date()));
+const endDate = ref(formatDateAdd(new Date(), 1));
+const days = ref(1)
 const showCalender = ref(false)
+const formatter = (day) => {
+  if (day.type === 'start') {
+    day.bottomInfo = '入住';
+  } else if (day.type === 'end') {
+    day.bottomInfo = '离店';
+  } 
+  return day;
+};
+
+// 选择日期
+const calendarConfirm = (values) => {
+  const [start, end] = values;
+  startDate.value = formatDate(start);
+  endDate.value = formatDate(end);
+  days.value = getDateInterval(start, end)
+  showCalender.value = false;
+};
+
+// 建议区域
+const homeStore = useHomeStore()
+const { hotSuggests } = storeToRefs(homeStore)
 </script>
 
 <style lang="less" scoped>
-.search-box {
+.search_box {
   --van-calendar-popup-height: 100%;
 }
 
@@ -141,6 +187,25 @@ const showCalender = ref(false)
     text-align: center;
     font-size: 12px;
     color: #666;
+  }
+}
+
+.price-counter {
+  .start {
+    border-right: 1px solid  var(--line-color);
+  }
+}
+
+.hot-suggests {
+  margin: 10px 0;
+  height: auto;
+
+  .item {
+    padding: 4px 8px;
+    margin: 4px;
+    border-radius: 14px;
+    font-size: 12px;
+    line-height: 1;
   }
 }
 </style>
