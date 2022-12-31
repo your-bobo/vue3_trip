@@ -35,6 +35,14 @@ const router = createRouter({
         hiddlenTabbar: true
       }
     },
+    {
+      path: "/search",
+      name: "search",
+      component: () => import("../views/search/trip_search.vue"),
+      meta: {
+        hiddlenTabbar: true
+      }
+    },
   ],
 });
 

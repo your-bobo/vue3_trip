@@ -14,14 +14,14 @@
       <div class="start">
         <div class="date" @click="show = true">
           <span class="tip">入住</span>
-          <span class="time">{{ startDate }}</span>
+          <span class="time">{{ startDateStr }}</span>
         </div>
         <div class="stay">共{{ days }}晚</div>
       </div>
       <div class="end">
         <div class="date">
           <span class="tip">离店</span>
-          <span class="time">{{ endDate }}</span>
+          <span class="time">{{ endDateStr }}</span>
         </div>
       </div>
     </div>
@@ -46,6 +46,11 @@
         </div>
       </template>
     </div>
+
+    <!-- 搜索按钮 -->
+    <div class="section search-btn">
+      <div class="btn" @click="clickSearch">开始搜索</div>
+    </div>
   </div>
 </template>
 
@@ -53,9 +58,10 @@
 import { useRouter } from 'vue-router'
 import useCityStore from '@/stores/modules/city';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
-import { formatDate, getDateInterval, formatDateAdd } from '@/utils/date.js'
+import { ref, computed } from 'vue';
+import { formatDate, getDateInterval } from '@/utils/date.js'
 import useHomeStore from '@/stores/modules/home'
+import useMainStore from '@/stores/modules/main'
 
 const router = useRouter()
 
@@ -78,9 +84,14 @@ const cityStore = useCityStore()
 const { currentCity } = storeToRefs(cityStore)
 
 // 日期范围
-const startDate = ref(formatDate(new Date()));
-const endDate = ref(formatDateAdd(new Date(), 1));
-const days = ref(1)
+const mainStore = useMainStore()
+const { startDate, endDate, days } = storeToRefs(mainStore)
+const startDateStr = computed(() => {
+  return formatDate(startDate.value)
+})
+const endDateStr = computed(() => {
+  return formatDate(endDate.value)
+})
 const showCalender = ref(false)
 const formatter = (day) => {
   if (day.type === 'start') {
@@ -94,8 +105,8 @@ const formatter = (day) => {
 // 选择日期
 const calendarConfirm = (values) => {
   const [start, end] = values;
-  startDate.value = formatDate(start);
-  endDate.value = formatDate(end);
+  startDate.value = start;
+  endDate.value = end;
   days.value = getDateInterval(start, end)
   showCalender.value = false;
 };
@@ -103,6 +114,18 @@ const calendarConfirm = (values) => {
 // 建议区域
 const homeStore = useHomeStore()
 const { hotSuggests } = storeToRefs(homeStore)
+
+// 搜索
+const clickSearch = () => {
+  router.push({
+    path: '/search',
+    query: {
+      startDate: startDate.value,
+      endDate: endDate.value,
+      days: days.value
+    }
+  })
+}
 </script>
 
 <style lang="less" scoped>
@@ -206,6 +229,21 @@ const { hotSuggests } = storeToRefs(homeStore)
     border-radius: 14px;
     font-size: 12px;
     line-height: 1;
+  }
+}
+
+.search-btn {
+  .btn {
+    width: 342px;
+    height: 38px;
+    max-height: 50px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    background-image: var(--theme-linear-gradient);
   }
 }
 </style>

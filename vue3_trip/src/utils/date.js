@@ -5,8 +5,8 @@ import dayjs from 'dayjs'
  * @param {*传入日期} date
  * @returns xx月xx日
  */
-export const formatDate = (time) => {
-  return dayjs(time).format('MM月DD日')
+export const formatDate = (time, type = 'MM月DD日') => {
+  return dayjs(time).format(type)
 }
 
 /**
@@ -16,16 +16,5 @@ export const formatDate = (time) => {
  * @returns  相差天数
  */
 export const getDateInterval = (time1, time2) => {
-  return dayjs(time1).diff(time2, 'day');
-}
-
-
-/**
- * 
- * @param {日期} time 
- * @param {加上的天数} value 
- * @returns xx月xx日
- */
-export const formatDateAdd = (time, value) => {
-  return dayjs(time).add(value, 'day').format('MM月DD日')
+  return dayjs(time2).diff(time1, 'day');
 }
