@@ -24,10 +24,20 @@ import HouseItemV3 from "@/components/house-item-v3/house-item-v3.vue"
 
 import useHomeStore from '@/stores/modules/home'
 import { storeToRefs } from 'pinia';
+import { useRouter } from "vue-router";
 
 const homeStore = useHomeStore()
 const { houselist } = storeToRefs(homeStore)
 
+const router = useRouter()
+const itemClick = (item) => {
+  router.push({
+    path: '/detail',
+    query: {
+      houseId: item.houseId
+    }
+  })
+}
 
 </script>
 

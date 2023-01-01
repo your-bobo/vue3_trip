@@ -43,6 +43,14 @@ const router = createRouter({
         hiddlenTabbar: true
       }
     },
+    {
+      path: "/detail",
+      name: "detail",
+      component: () => import("../views/detail/trip_detail.vue"),
+      meta: {
+        hiddlenTabbar: true
+      }
+    },
   ],
 });
 

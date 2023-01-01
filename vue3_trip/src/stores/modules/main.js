@@ -9,7 +9,8 @@ const useMainStore = defineStore('main', {
     return {
       startDate: startDate,
       endDate: endDate,
-      days: 1
+      days: 1,
+      isLoading: false
     }
   }
 })
