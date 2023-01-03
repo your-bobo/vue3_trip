@@ -1,8 +1,8 @@
 <template>
   <div class="intro">
-    <h2 class="title">{{ priceIntro?.title }}</h2>
+    <h2 class="title">{{ priceIntro.title }}</h2>
     <div class="content">
-      {{ priceIntro?.introduction }}
+      {{ priceIntro.introduction }}
     </div>
   </div>
 </template>
@@ -13,7 +13,7 @@ import { computed } from 'vue'
 
 const detailStore = useDetailStore()
 const priceIntro = computed(() => {
-  return detailStore.detailInfos?.mainPart?.dynamicModule?.positionModule
+  return detailStore.detailInfos?.mainPart?.introductionModule || {}
 })
 </script>
 

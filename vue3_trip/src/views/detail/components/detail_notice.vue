@@ -20,7 +20,7 @@ import { computed } from 'vue'
 
 const detailStore = useDetailStore()
 const orderRules = computed(() => {
-  return detailStore.detailInfos?.mainPart?.dynamicModule?.rulesModule?.orderRules
+  return detailStore.detailInfos?.mainPart?.dynamicModule?.rulesModule?.orderRules || []
 })
 </script>
 

@@ -3,17 +3,17 @@
     <detail-section title="房东介绍" more-text="查看房东主页">
       <div class="intro">
         <div class="top">
-          <img :src="landlord?.topScroll" alt="">
+          <img :src="landlord.topScroll" alt="">
         </div>
         <div class="header">
           <div class="left">
             <div class="avatar">
-              <img :src="landlord?.hotelLogo" alt="">
+              <img :src="landlord.hotelLogo" alt="">
             </div>
             <div class="info">
-              <div class="name">{{ landlord?.hotelName }}</div>
+              <div class="name">{{ landlord.hotelName }}</div>
               <div class="tags">
-                <template v-for="(item, index) in landlord?.hotelTags" :key="index">
+                <template v-for="(item, index) in landlord.hotelTags" :key="index">
                   <div class="item" :style="{ color: item.tagText.color }">
                     <span>{{ item.tagText.text }}</span>
                     <span v-if="index !== landlord.hotelTags.length - 1" class="divider">|</span>
@@ -47,7 +47,7 @@ import { computed } from 'vue'
 
 const detailStore = useDetailStore()
 const landlord = computed(() => {
-  return detailStore.detailInfos?.mainPart?.dynamicModule?.landlordModule
+  return detailStore.detailInfos?.mainPart?.dynamicModule?.landlordModule || {}
 })
 
 </script>

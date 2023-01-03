@@ -57,11 +57,7 @@ import { computed } from 'vue'
 
 const detailStore = useDetailStore()
 const comment = computed(() => {
-  if (detailStore.detailInfos?.mainPart?.dynamicModule?.commentModule) {
-    return detailStore.detailInfos?.mainPart?.dynamicModule?.commentModule 
-  } else {
-    return {}
-  }
+  return detailStore.detailInfos?.mainPart?.dynamicModule?.commentModule || {}
 })
 </script>
 

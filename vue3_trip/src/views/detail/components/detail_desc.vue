@@ -1,8 +1,8 @@
 <template>
   <div class="desc">
-    <!-- <div class="name">{{ topInfos.houseName }}</div> -->
+    <div class="name">{{ topInfos.houseName }}</div>
     <div class="tags">
-      <template v-for="(item, index) in topInfos?.houseTags" :key="index">
+      <template v-for="(item, index) in topInfos.houseTags" :key="index">
         <span 
           class="item" 
           v-if="item.tagText"
@@ -13,20 +13,20 @@
     </div>
     <div class="comment extra">
       <div class="left">
-        <span class="score">{{ topInfos?.commentBrief?.overall }}</span>
-        <span class="title">{{ topInfos?.commentBrief?.scoreTitle }}</span>
-        <span class="brief">{{ topInfos?.commentBrief?.commentBrief }}</span>
+        <span class="score">{{ topInfos.commentBrief?.overall }}</span>
+        <span class="title">{{ topInfos.commentBrief?.scoreTitle }}</span>
+        <span class="brief">{{ topInfos.commentBrief?.commentBrief }}</span>
       </div>
       <div class="right">
         <span class="count">
-          {{ topInfos?.commentBrief?.totalCount }}条评论
+          {{ topInfos.commentBrief?.totalCount }}条评论
           <van-icon name="arrow" />
         </span>
       </div>
     </div>
     <div class="position extra">
       <div class="left address">
-        {{ topInfos?.nearByPosition?.address }}
+        {{ topInfos.nearByPosition?.address }}
       </div>
       <div class="right">
         地图·周边
@@ -42,7 +42,7 @@ import { computed } from 'vue'
 
 const detailStore = useDetailStore()
 const topInfos = computed(() => {
-  return detailStore.detailInfos?.mainPart?.topModule
+  return detailStore.detailInfos?.mainPart?.topModule || {}
 })
 </script>
 
